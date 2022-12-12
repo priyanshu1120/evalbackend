@@ -5,12 +5,16 @@ require('dotenv').config()
 
 const {connect} = require("./config/db")
 const {UserRouter} = require("./routes/user.route")
+const {TodoRouter} = require("./routes/todo.route")
+const { authentication } = require("./middleware/authentication")
+
 app.get("/",(req,res)=>{
     res.send("server run successfully")
 })
 
 app.use("/users",UserRouter)
-
+app.use(authentication)
+app.use("/todo",TodoRouter)
 app.listen(process.env.PORT,async()=>{
       try{
            await connect
